@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#193f3a" />
+    <meta name="description" content="轻轻一点，今天吃什么就有答案。支持自己的食谱、随机抽签和离线使用。" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="今天吃什么" />
+    <link rel="icon" type="image/png" href="./icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>今天吃什么？</title>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="site-header">
+        <div class="brand-mark" aria-hidden="true">✦</div>
+        <div class="brand-copy">
+          <span class="eyebrow">YOUR TINY FOOD COMPANION</span>
+          <h1>今天吃什么<span class="title-mark">？</span></h1>
+        </div>
+        <span class="header-pill">🍚 好好吃饭</span>
+      </header>
+
+      <nav class="tab-bar" aria-label="主功能">
+        <button class="tab is-active" type="button" id="tab-draw" aria-controls="panel-draw" aria-current="page">
+          <span aria-hidden="true">🎲</span> 随机抽签
+        </button>
+        <button class="tab" type="button" id="tab-menu" aria-controls="panel-menu">
+          <span aria-hidden="true">📋</span> 我的食谱 <span class="tab-count" id="tab-food-count">0</span>
+        </button>
+      </nav>
+
+      <section id="panel-draw" class="view" aria-labelledby="tab-draw">
+        <div class="draw-card">
+          <div class="draw-card-decor decor-a" aria-hidden="true"></div>
+          <div class="draw-card-decor decor-b" aria-hidden="true"></div>
+          <div class="card-topline">
+            <span class="mini-label"><span class="mini-dot"></span> 今日美食灵感</span>
+            <span class="equal-tag">公平随机 · 不纠结</span>
+          </div>
+          <div class="dish-stage">
+            <div class="plate" id="plate" aria-hidden="true">🍽️</div>
+            <p class="stage-caption" id="stage-caption">让好运帮你决定</p>
+            <h2 class="dish-name" id="draw-result" aria-live="polite" aria-atomic="true">今天吃点什么呢？</h2>
+            <p class="stage-hint" id="stage-hint">按下按钮，从食谱里抽一道菜</p>
+          </div>
+          <button class="draw-button" id="draw-button" type="button">
+            <span aria-hidden="true" id="draw-button-icon">✦</span>
+            <span id="draw-button-text">帮我决定！</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+        <p class="draw-footnote" id="draw-footnote">当前有 0 道备选，每道菜被抽中的概率相同。</p>
+        <div class="tip-card">
+          <span class="tip-icon" aria-hidden="true">💡</span>
+          <div>
+            <strong>总在纠结吃什么？</strong>
+            <p>先在「我的食谱」里添加喜欢的食物，然后把选择交给随机数。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-menu" class="view" aria-labelledby="tab-menu" hidden>
+        <div class="menu-head">
+          <div>
+            <span class="eyebrow">MY FOOD LIST</span>
+            <h2>我的食谱 <span id="menu-food-count" class="menu-count">0</span></h2>
+          </div>
+          <span class="head-emoji" aria-hidden="true">🥗</span>
+        </div>
+        <form class="add-form" id="food-form">
+          <label for="food-input" id="food-form-label">添加一道想吃的菜</label>
+          <div class="input-line">
+            <input id="food-input" name="food" type="text" maxlength="36" placeholder="例如：番茄牛腩饭" autocomplete="off" required />
+            <button id="save-food" class="primary-small" type="submit">＋ 添加</button>
+          </div>
+          <button type="button" id="cancel-edit" class="text-action" hidden>取消编辑</button>
+        </form>
+        <div class="food-list-header">
+          <span>备选清单</span>
+          <label class="search-field">
+            <span class="search-symbol" aria-hidden="true">⌕</span>
+            <span class="sr-only">搜索食谱</span>
+            <input type="search" id="food-search" placeholder="搜索菜名" autocomplete="off" />
+          </label>
+        </div>
+        <ul id="food-list" class="food-list" aria-live="polite"></ul>
+        <p class="empty-list" id="empty-list" hidden></p>
+        <div class="data-card">
+          <div>
+            <strong>📦 食谱备份</strong>
+            <p>食谱只保存在当前设备的浏览器中，建议导出文件备份。</p>
+          </div>
+          <div class="data-actions">
+            <button class="secondary-button" type="button" id="export-button">↓ 导出 JSON</button>
+            <button class="secondary-button" type="button" id="import-button">↑ 导入 JSON</button>
+            <input type="file" id="import-file" accept=".json,application/json" hidden />
+          </div>
+        </div>
+      </section>
+      <footer class="site-footer">一份小小的食谱，省去每天的大大纠结。 <span aria-hidden="true">♡</span></footer>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>
