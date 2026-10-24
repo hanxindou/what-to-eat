@@ -2,6 +2,8 @@
 
 一个零依赖、手机优先的随机选餐 PWA。功能：菜品增删改查、搜索、随机抽签、JSON 导入导出、离线访问。
 
+飞飞和粉粉的专属粉色主题包含双人 Q 版插画、波点、爱心与蝴蝶结底纹，搭配猫咪浮动、抽签摇摆和揭晓时的爱心散开动画。系统开启「减少动态效果」时会自动停用装饰动画，并直接显示抽签结果。
+
 ## 1. 本地运行（Windows / VS Code）
 
 1. 解压文件，进入 `what-to-eat` 文件夹。
@@ -57,7 +59,8 @@ what-to-eat/
 ├── manifest.webmanifest   PWA 安装配置
 ├── sw.js                  断网缓存
 ├── .nojekyll              告诉 GitHub Pages 不走 Jekyll 构建
-└── icons/
+    ├── assets/                猫咪、爱心、蝴蝶结、背景图案与双人插画（SVG / WebP）
+    └── icons/
         ├── icon-192.png
         ├── icon-512.png
         └── icon.svg             粉色猫咪图标源文件

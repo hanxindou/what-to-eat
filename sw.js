@@ -1,12 +1,17 @@
 "use strict";
 
 // 更新 APP_CACHE 版本号，可以让旧版本的离线缓存自动清理。
-const APP_CACHE = "what-to-eat-static-v2";
+const APP_CACHE = "what-to-eat-static-v6";
 const FILES = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
+  "./assets/kitty.svg",
+  "./assets/bow.svg",
+  "./assets/heart.svg",
+  "./assets/love-pattern.svg",
+  "./assets/couple-feifei-fenfen.webp",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png"

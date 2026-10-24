@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "今天吃什么？",
-  "short_name": "今天吃什么",
-  "description": "自己的食谱，随机决定今天吃什么。",
+  "name": "飞飞和粉粉 · 今天吃什么？",
+  "short_name": "飞飞粉粉饭饭屋",
+  "description": "两个人的心动菜单，一起拆开下一餐的小幸福。",
   "lang": "zh-CN",
   "start_url": "./",
   "scope": "./",

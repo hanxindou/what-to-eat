@@ -97,12 +97,11 @@ h1 { font-size: 24px; letter-spacing: -.06em; line-height: 1.35; margin-top: 2px
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 @media (min-width: 650px) { .app-shell { padding-top: 55px; } }
 @media (max-width: 370px) { .app-shell { padding-left: 13px; padding-right: 13px; } .draw-card { padding: 19px 17px; } .header-pill { font-size: 10px; padding: 7px; } h1 { font-size: 22px; } }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 
 /* Pink kitty theme */
 :root { --ink: #503447; --muted: #927789; --line: #f4cbd9; --paper: #fffdfd; --cream: #fff4f8; --rose: #ec5b91; --rose-dark: #b83167; }
 html { background: var(--cream); }
-body { color: var(--ink); background: radial-gradient(circle at 12% 10%, #ffffffb8 0 4px, transparent 5px) 0 0 / 42px 42px, radial-gradient(circle at 90% 0%, #ffd2e2 0, transparent 34%), linear-gradient(160deg, #fff8fb, #fff0f6 55%, #ffe9f2); }
+body { color: var(--ink); background: radial-gradient(circle, #ffffffd9 0 4px, transparent 4.8px) 5px 5px / 42px 42px, url("./assets/love-pattern.svg") 0 0 / 200px 180px, radial-gradient(circle at 90% 0%, #ffd2e2 0, transparent 38%), linear-gradient(160deg, #fff8fb, #fff0f6 55%, #ffe9f2); }
 button:focus-visible, input:focus-visible { outline-color: #a5275e; }
 .app-shell { position: relative; max-width: 600px; padding-top: max(34px, env(safe-area-inset-top)); padding-left: 22px; padding-right: 22px; }
 .app-shell::before, .app-shell::after { position: absolute; z-index: -1; color: #ef9db9; font-size: 28px; pointer-events: none; }
@@ -124,13 +123,32 @@ h1 { font-size: 26px; }
 .mini-label { color: #a63d6c; font-size: 12px; font-weight: 800; }
 .mini-dot { width: 8px; height: 8px; background: var(--rose); box-shadow: 0 0 0 4px #ffe2ec; }
 .equal-tag { border-color: #f6cad9; background: #fff4f8; color: #ae6382; }
-.dish-stage { position: relative; min-height: 310px; margin: 20px 0 18px; padding: 22px 16px; border: 1px dashed #f3b8ce; border-radius: 25px; background: radial-gradient(circle at 12% 20%, #ffffff 0 3px, transparent 4px) 0 0 / 36px 36px, linear-gradient(145deg, #fff1f6, #ffe9f2); }
-.kitty-scene { position: relative; width: 180px; height: 160px; margin: -5px auto 8px; }
-.kitty { display: block; width: 180px; height: 152px; filter: drop-shadow(0 8px 0 #f7cadb); }
-.scene-sparkle { position: absolute; color: #f17da5; font-size: 23px; }
-.sparkle-left { top: 42px; left: -22px; }
-.sparkle-right { top: 13px; right: -20px; }
-.plate { position: absolute; right: -13px; bottom: 2px; width: 47px; height: 47px; margin: 0; border: 2px solid #f2b3c9; background: white; box-shadow: 0 4px 0 #f8cddd; font-size: 24px; }
+.dish-stage { position: relative; isolation: isolate; overflow: hidden; min-height: 350px; margin: 20px 0 18px; padding: 28px 16px 26px; border: 1px dashed #f3b8ce; border-radius: 25px; background: radial-gradient(circle, #ffffffd9 0 3px, transparent 3.8px) 4px 4px / 36px 36px, radial-gradient(ellipse at 50% 20%, #fffaff 0, transparent 68%), linear-gradient(145deg, #ffedf5, #ffe3ee); }
+.dish-stage::before { content: ""; position: absolute; inset: 7px; z-index: -2; border: 1px solid #fff9; border-radius: 19px; pointer-events: none; }
+.stage-stickers { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.sticker { position: absolute; display: block; background-position: center; background-size: contain; background-repeat: no-repeat; }
+.sticker-bow { width: 48px; height: 39px; background-image: url("./assets/bow.svg"); }
+.sticker-heart { width: 27px; height: 27px; background-image: url("./assets/heart.svg"); }
+.bow-one { left: 7%; top: 26px; transform: rotate(-22deg); }
+.bow-two { right: 6%; top: 132px; width: 40px; height: 32px; transform: rotate(23deg); }
+.bow-three { left: 5%; bottom: 24px; width: 32px; height: 26px; opacity: .65; transform: rotate(-10deg); }
+.heart-one { right: 7%; top: 24px; width: 35px; height: 35px; transform: rotate(18deg); }
+.heart-two { left: 5%; top: 133px; transform: rotate(-16deg); }
+.heart-three { left: 18%; top: 99px; width: 16px; height: 16px; opacity: .8; transform: rotate(9deg); }
+.heart-four { right: 18%; top: 92px; width: 17px; height: 17px; transform: rotate(-20deg); }
+.heart-five { right: 6%; bottom: 29px; width: 22px; height: 22px; opacity: .65; transform: rotate(17deg); }
+.sticker-star { color: #eaa2c0; font-size: 21px; }
+.star-one { left: 10%; top: 88px; font-size: 15px; }
+.star-two { right: 6%; top: 84px; font-size: 26px; }
+.star-three { left: 12%; top: 200px; font-size: 12px; }
+.sticker-dots { color: #e9a2bc; font-size: 20px; letter-spacing: 3px; }
+.dots-one { left: 9%; top: 177px; transform: rotate(36deg); }
+.dots-two { right: 9%; top: 194px; transform: rotate(-30deg); }
+.kitty-scene { position: relative; width: 198px; height: 184px; margin: 0 auto 14px; }
+.kitty-scene::before { content: ""; position: absolute; z-index: -1; width: 170px; height: 170px; left: 14px; top: 0; border: 1px solid #f7d2e1; border-radius: 50%; background: #fffafb; box-shadow: 0 0 0 7px #ffffffb8, 0 0 0 8px #f9d6e4; }
+.kitty { position: absolute; top: 9px; left: -3px; display: block; width: 204px; height: 170px; transform: rotate(-7deg); filter: drop-shadow(0 5px 0 #ecc6d680); }
+.plate { position: absolute; right: -3px; bottom: -1px; width: 43px; height: 43px; margin: 0; border: 2px solid #f2b3c9; background: white; box-shadow: 0 4px 0 #f8cddd; font-size: 22px; }
+.stage-caption, .dish-name, .stage-hint { position: relative; z-index: 1; }
 .stage-caption { color: #ac5279; font-weight: 800; }
 .dish-name { margin: 9px 0 8px; color: #743d5a; font-size: clamp(23px, 6vw, 33px); }
 .stage-hint { color: #a77a8e; }
@@ -161,4 +179,70 @@ h1 { font-size: 26px; }
 .secondary-button { border-color: #e9b6ca; color: #a34470; }
 .toast { background: #8d345d; box-shadow: 0 10px 27px #8d345d33; }
 @media (min-width: 650px) { .app-shell { padding-top: 57px; } }
-@media (max-width: 370px) { .app-shell { padding-left: 13px; padding-right: 13px; } .draw-card { padding: 16px; } .eyebrow { font-size: 9px; } .equal-tag { padding: 6px 8px; font-size: 9px; } }
+@media (max-width: 370px) { .app-shell { padding-left: 13px; padding-right: 13px; } .draw-card { padding: 16px; } .eyebrow { font-size: 9px; } .equal-tag { padding: 6px 8px; font-size: 9px; } .bow-one { left: 2%; top: 16px; width: 33px; height: 27px; } .heart-one { right: 3%; top: 17px; width: 27px; height: 27px; } .heart-three, .heart-four { display: none; } .bow-two { right: 1%; top: 143px; width: 29px; height: 24px; } .heart-two { left: 1%; top: 140px; width: 22px; height: 22px; } .dots-one, .dots-two { display: none; } }
+
+/* A little movement for each little surprise. */
+.view:not([hidden]) { animation: view-arrive .38s ease-out both; }
+.kitty-scene { animation: kitty-float 4.8s ease-in-out infinite; }
+.sticker-heart { animation: heart-breathe 4.5s ease-in-out infinite; }
+.heart-two, .heart-five { animation-delay: -1.5s; }
+.heart-three, .heart-four { animation-delay: -3s; }
+.sticker-bow { transform-origin: 50% 25%; animation: ribbon-sway 6s ease-in-out infinite; }
+.bow-two { animation-delay: -2s; }
+.bow-three { animation-delay: -4s; }
+.sticker-star { animation: star-glow 3.6s ease-in-out infinite; }
+.star-two { animation-delay: -1.2s; }
+.star-three { animation-delay: -2.4s; }
+.brand-mark, .tab, .icon-button, .primary-small, .secondary-button { transition: transform .2s ease, background .2s ease, box-shadow .2s ease; }
+.draw-button { position: relative; overflow: hidden; transition: transform .2s ease, box-shadow .2s ease; }
+.draw-button::after { content: ""; position: absolute; top: -50%; left: -60%; width: 35%; height: 200%; background: linear-gradient(90deg, transparent, #fff5, transparent); transform: skewX(-22deg); pointer-events: none; }
+.draw-button > span { position: relative; z-index: 1; }
+.is-drawing .kitty-scene { animation: kitty-wiggle .55s ease-in-out infinite; }
+.is-drawing .dish-name { opacity: .78; }
+.is-drawing .draw-button { opacity: .8; cursor: progress; }
+.is-revealed .dish-name { animation: result-bloom .55s cubic-bezier(.2,.8,.2,1.25) both; }
+.is-revealed .kitty-scene::before { animation: lucky-ring .8s ease-out; }
+.celebration { position: absolute; inset: 0; z-index: 3; overflow: hidden; pointer-events: none; }
+.celebration-particle { position: absolute; left: 50%; top: 43%; width: 21px; height: 21px; opacity: 0; background-size: contain; background-repeat: no-repeat; background-position: center; animation: love-burst 1.15s ease-out var(--delay) both; }
+.particle-heart { background-image: url("./assets/heart.svg"); }
+.particle-bow { width: 27px; height: 23px; background-image: url("./assets/bow.svg"); }
+@keyframes view-arrive { from { transform: translateY(7px); } to { transform: translateY(0); } }
+@keyframes kitty-float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-6px) rotate(1.5deg); } }
+@keyframes heart-breathe { 0%, 100% { translate: 0 0; scale: 1; } 50% { translate: 0 -4px; scale: 1.09; } }
+@keyframes ribbon-sway { 0%, 100% { rotate: -3deg; } 50% { rotate: 4deg; } }
+@keyframes star-glow { 0%, 100% { opacity: .45; scale: .85; } 50% { opacity: 1; scale: 1.12; } }
+@keyframes kitty-wiggle { 0%, 100% { transform: translateY(-3px) rotate(-3deg); } 50% { transform: translateY(-8px) rotate(3deg); } }
+@keyframes result-bloom { 0% { opacity: .3; transform: translateY(7px) scale(.91); } 70% { opacity: 1; transform: translateY(-2px) scale(1.025); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes lucky-ring { 0% { box-shadow: 0 0 0 7px #ffffffb8, 0 0 0 8px #f9d6e4; } 65% { box-shadow: 0 0 0 14px #ffffff55, 0 0 0 23px #f5bdd64d; } 100% { box-shadow: 0 0 0 7px #ffffffb8, 0 0 0 8px #f9d6e4; } }
+@keyframes love-burst { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.3); } 15% { opacity: 1; } 72% { opacity: .9; } 100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--spin)) scale(1); } }
+@keyframes button-shine { to { left: 135%; } }
+.couple-card { position: relative; overflow: hidden; padding: 18px 19px 21px; border: 1px solid #f0bdd1; border-radius: 24px; background: linear-gradient(155deg, #fffdfd, #fff4f9); box-shadow: 0 5px 0 #f9dce7; text-align: center; }
+.couple-card::before { content: "♡"; position: absolute; top: 63px; left: 18px; color: #efacc6; font-size: 24px; transform: rotate(-15deg); }
+.couple-card::after { content: "✦"; position: absolute; top: 110px; right: 22px; color: #f3c2d5; font-size: 19px; }
+.couple-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #b77392; font-size: 9px; font-weight: 800; letter-spacing: .1em; }
+.couple-stamp { padding: 5px 8px; border: 1px dashed #efbad0; border-radius: 8px; background: white; font-size: 10px; letter-spacing: 0; white-space: nowrap; }
+.couple-illustration { position: relative; width: min(100%, 330px); margin: 12px auto 12px; }
+.couple-illustration img { display: block; width: 100%; height: auto; animation: couple-sway 6s ease-in-out infinite; }
+.couple-names { position: relative; display: grid; grid-template-columns: 1fr 30px 1fr; align-items: center; width: 210px; margin: 2px auto 0; color: #a54771; font-size: 12px; font-weight: 800; }
+.couple-names span { justify-self: center; padding: 4px 19px; border: 1px solid #f3c8d8; border-radius: 99px; background: white; }
+.couple-names b { color: #e95e96; font-size: 19px; animation: heart-breathe 4.5s ease-in-out infinite; }
+.couple-card h2 { color: #824464; font-size: 19px; line-height: 1.5; letter-spacing: -.03em; }
+.couple-card h2 span { color: #e96598; }
+.couple-message { margin-top: 5px; color: #a55d80; font-size: 12px; line-height: 1.8; }
+.couple-note { margin: 14px 0 0; padding-top: 13px; border-top: 1px dashed #f1c7d8; color: #987386; font-size: 12px; line-height: 1.9; }
+@media (max-width: 370px) {
+  .site-header { gap: 9px; }
+  .brand-mark { width: 48px; height: 48px; flex-basis: 48px; }
+  .site-header h1 { white-space: nowrap; }
+  .header-pill { padding: 6px 7px; font-size: 9px; }
+}
+@keyframes couple-sway { 0%, 100% { transform: translateY(0) rotate(-.5deg); } 50% { transform: translateY(-3px) rotate(.5deg); } }
+@media (hover: hover) {
+  .brand-mark:hover { transform: rotate(4deg) translateY(-2px); }
+  .draw-button:not(:disabled):hover { transform: translateY(-2px); box-shadow: inset 0 -4px 0 #cf3c72, 0 9px 17px #dc58934d; }
+  .draw-button:not(:disabled):hover::after { animation: button-shine .7s ease-out; }
+  .icon-button:hover, .primary-small:hover, .secondary-button:hover { transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

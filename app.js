@@ -7,7 +7,38 @@ const MAX_NAME = 36;
 const SAMPLES = ["黄焖鸡米饭", "麻辣烫", "兰州拉面", "猪脚饭", "煲仔饭", "砂锅米线", "汉堡"];
 const $ = (id) => document.getElementById(id);
 
-const state = { foods: [], editingId: null, lastResult: null, drawing: false, toastTimer: null };
+const state = { foods: [], editingId: null, lastResult: null, drawing: false, drawTimer: null, toastTimer: null, celebrationTimer: null };
+
+function prefersReducedMotion() {
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+}
+
+function resetDrawEffects() {
+  clearInterval(state.drawTimer);
+  clearTimeout(state.celebrationTimer);
+  state.drawTimer = null;
+  state.drawing = false;
+  $("plate").classList.remove("is-rolling");
+  $("draw-card").classList.remove("is-drawing", "is-revealed");
+  $("draw-result").setAttribute("aria-busy", "false");
+  $("celebration").replaceChildren();
+}
+
+function celebrate() {
+  if (prefersReducedMotion()) return;
+  const positions = [[-100,-113],[-58,-133],[4,-140],[65,-128],[115,-93],[-125,-45],[123,-33],[-108,20],[99,30],[-65,66],[54,75],[1,88]];
+  const burst = $("celebration");
+  positions.forEach(([x, y], index) => {
+    const particle = document.createElement("span");
+    particle.className = `celebration-particle ${index % 4 === 0 ? "particle-bow" : "particle-heart"}`;
+    particle.style.setProperty("--dx", `${x}px`);
+    particle.style.setProperty("--dy", `${y}px`);
+    particle.style.setProperty("--delay", `${index % 3 * 45}ms`);
+    particle.style.setProperty("--spin", `${index % 2 ? 28 : -28}deg`);
+    burst.append(particle);
+  });
+  state.celebrationTimer = setTimeout(() => burst.replaceChildren(), 1350);
+}
 
 function createId() {
   if (globalThis.crypto?.randomUUID) return crypto.randomUUID();
@@ -61,6 +92,7 @@ function commitFoods(nextFoods) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, foods: nextFoods }));
     state.foods = nextFoods;
     state.lastResult = null;
+    resetDrawEffects();
     render();
     return true;
   } catch (error) {
@@ -75,13 +107,13 @@ function render() {
   $("tab-food-count").textContent = String(count);
   $("menu-food-count").textContent = String(count);
   $("draw-footnote").textContent = count
-    ? `当前有 ${count} 道备选，每道菜被抽中的概率相同。`
-    : "食谱还是空的，先添加一道想吃的菜吧。";
+    ? `${count} 道美味，两个人的下一顿小幸福 ♡`
+    : "先收藏一份喜欢，再拆开美味惊喜吧 ♡";
   if (!state.drawing) {
-    $("draw-result").textContent = state.lastResult ?? (count ? "今天吃点什么呢？" : "食谱空空如也");
-    $("stage-caption").textContent = state.lastResult ? "今天就决定吃" : "让好运帮你决定";
-    $("stage-hint").textContent = state.lastResult ? "不满意的话，可以再抽一次" : (count ? "按下按钮，从食谱里抽一道菜" : "去「我的食谱」添加美食吧");
-    $("draw-button-text").textContent = state.lastResult ? "再抽一次" : "帮我决定！";
+    $("draw-result").textContent = state.lastResult ?? (count ? "今天，一起吃什么？" : "心动菜单空空的");
+    $("stage-caption").textContent = state.lastResult ? "飞飞 ♡ 粉粉，一起开饭啦" : "飞飞和粉粉的美味小魔法";
+    $("stage-hint").textContent = state.lastResult ? "一人一口小幸福，今天也要甜甜的 ♡" : (count ? "菜单慢慢选，饭要一起好好吃" : "去「心动菜单」收藏我们想吃的美味吧");
+    $("draw-button-text").textContent = state.lastResult ? "再抽一份甜蜜" : (count ? "抽一份双人小幸福" : "先去收藏美味");
     $("plate").textContent = state.lastResult ? "🥢" : "🍽️";
   }
   $("draw-button").disabled = count === 0 || state.drawing;
@@ -95,8 +127,8 @@ function renderFoodList() {
   list.replaceChildren();
   $("empty-list").hidden = items.length !== 0;
   $("empty-list").textContent = state.foods.length === 0
-    ? "还没有菜品。在上方添加第一道想吃的菜吧。"
-    : "没有找到符合条件的菜名。";
+    ? "菜单还空着呢，把第一份喜欢的味道收进来吧 ♡"
+    : "这份美味还没收藏，换个名字找找吧。";
 
   items.forEach((food) => {
     const li = document.createElement("li");
@@ -135,15 +167,15 @@ function switchTab(which) {
   $("panel-menu").hidden = draw;
   $("tab-draw").classList.toggle("is-active", draw);
   $("tab-menu").classList.toggle("is-active", !draw);
-  $("tab-draw").toggleAttribute("aria-current", draw);
-  $("tab-menu").toggleAttribute("aria-current", !draw);
+  $(draw ? "tab-draw" : "tab-menu").setAttribute("aria-current", "page");
+  $(draw ? "tab-menu" : "tab-draw").removeAttribute("aria-current");
 }
 
 function resetForm() {
   state.editingId = null;
   $("food-input").value = "";
-  $("food-form-label").textContent = "添加一道想吃的菜";
-  $("save-food").textContent = "＋ 添加";
+  $("food-form-label").textContent = "把我们想吃的，都收进来";
+  $("save-food").textContent = "＋ 加入";
   $("cancel-edit").hidden = true;
 }
 
@@ -164,7 +196,7 @@ function saveFood(event) {
   const name = normalizeName($("food-input").value);
   if (!name || name.length > MAX_NAME) { showToast("菜名应为 1–36 个字符"); return; }
   const duplicate = state.foods.some((food) => food.id !== state.editingId && food.name.toLocaleLowerCase() === name.toLocaleLowerCase());
-  if (duplicate) { showToast("食谱里已经有这道菜了"); return; }
+  if (duplicate) { showToast("这份美味已经在菜单里啦 ♡"); return; }
   let next;
   if (state.editingId) {
     next = state.foods.map((food) => food.id === state.editingId ? { ...food, name } : food);
@@ -173,7 +205,7 @@ function saveFood(event) {
     next = [...state.foods, { id: createId(), name }];
   }
   if (commitFoods(next)) {
-    showToast(state.editingId ? "菜名已修改" : "已加入食谱");
+    showToast(state.editingId ? "美味名字已更新" : "已收进心动菜单 ♡");
     resetForm();
     $("food-search").value = "";
     renderFoodList();
@@ -185,32 +217,40 @@ function deleteFood(id) {
   if (!found || !window.confirm(`确定删除「${found.name}」吗？`)) return;
   if (commitFoods(state.foods.filter((food) => food.id !== id))) {
     if (state.editingId === id) resetForm();
-    showToast("已删除");
+    showToast("已从菜单移除");
   }
 }
 
 function drawFood() {
   if (state.drawing || state.foods.length === 0) return;
+  resetDrawEffects();
   state.drawing = true;
+  $("draw-card").classList.add("is-drawing");
+  $("draw-result").setAttribute("aria-busy", "true");
   $("draw-button").disabled = true;
-  $("draw-button-text").textContent = "抽签中...";
-  $("stage-caption").textContent = "正在寻找你的今日美食";
-  $("stage-hint").textContent = "美味即将揭晓";
+  $("draw-button-text").textContent = "美味魔法施展中…";
+  $("stage-caption").textContent = "让小幸运转个圈";
+  $("stage-hint").textContent = "嘘，你的美味惊喜马上就来";
   $("plate").classList.add("is-rolling");
   const names = state.foods.map((food) => food.name);
   let ticks = 0;
-  const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+  const reduced = prefersReducedMotion();
   const totalTicks = reduced ? 1 : 15;
-  const interval = setInterval(() => {
+  state.drawTimer = setInterval(() => {
     $("draw-result").textContent = names[Math.floor(Math.random() * names.length)];
     ticks++;
     if (ticks >= totalTicks) {
-      clearInterval(interval);
+      clearInterval(state.drawTimer);
+      state.drawTimer = null;
       // 最终抽签独立于上方滚动动画。每道菜均匀随机抽中，可连续重复。
       state.lastResult = names[Math.floor(Math.random() * names.length)];
       state.drawing = false;
       $("plate").classList.remove("is-rolling");
+      $("draw-card").classList.remove("is-drawing");
       render();
+      $("draw-result").setAttribute("aria-busy", "false");
+      $("draw-card").classList.add("is-revealed");
+      celebrate();
     }
   }, reduced ? 1 : 78);
 }
@@ -226,7 +266,7 @@ function exportFoods() {
   anchor.click();
   anchor.remove();
   setTimeout(() => URL.revokeObjectURL(url), 5000);
-  showToast("备份文件已生成");
+  showToast("菜单备份已准备好 ♡");
 }
 
 async function importFoods(event) {
@@ -243,7 +283,7 @@ async function importFoods(event) {
       resetForm();
       $("food-search").value = "";
       renderFoodList();
-      showToast(`导入成功，共 ${names.length} 道菜`);
+      showToast(`找回了 ${names.length} 道心动美味 ♡`);
     }
   } catch (error) {
     console.warn("导入失败：", error);
