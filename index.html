@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#193f3a" />
+    <meta name="theme-color" content="#ffdce8" />
     <meta name="description" content="轻轻一点，今天吃什么就有答案。支持自己的食谱、随机抽签和离线使用。" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -18,17 +18,17 @@
   <body>
     <main class="app-shell">
       <header class="site-header">
-        <div class="brand-mark" aria-hidden="true">✦</div>
+        <div class="brand-mark" aria-hidden="true">🎀</div>
         <div class="brand-copy">
-          <span class="eyebrow">YOUR TINY FOOD COMPANION</span>
+          <span class="eyebrow">HELLO, LITTLE FOODIE ♡</span>
           <h1>今天吃什么<span class="title-mark">？</span></h1>
         </div>
-        <span class="header-pill">🍚 好好吃饭</span>
+        <span class="header-pill">♡ 好好吃饭</span>
       </header>
 
       <nav class="tab-bar" aria-label="主功能">
         <button class="tab is-active" type="button" id="tab-draw" aria-controls="panel-draw" aria-current="page">
-          <span aria-hidden="true">🎲</span> 随机抽签
+          <span aria-hidden="true">🎀</span> 随机抽签
         </button>
         <button class="tab" type="button" id="tab-menu" aria-controls="panel-menu">
           <span aria-hidden="true">📋</span> 我的食谱 <span class="tab-count" id="tab-food-count">0</span>
@@ -37,27 +37,42 @@
 
       <section id="panel-draw" class="view" aria-labelledby="tab-draw">
         <div class="draw-card">
-          <div class="draw-card-decor decor-a" aria-hidden="true"></div>
-          <div class="draw-card-decor decor-b" aria-hidden="true"></div>
+          <div class="draw-card-decor decor-a" aria-hidden="true">♡</div>
+          <div class="draw-card-decor decor-b" aria-hidden="true">✿</div>
           <div class="card-topline">
             <span class="mini-label"><span class="mini-dot"></span> 今日美食灵感</span>
-            <span class="equal-tag">公平随机 · 不纠结</span>
+            <span class="equal-tag">♡ 公平随机 · 不纠结</span>
           </div>
           <div class="dish-stage">
-            <div class="plate" id="plate" aria-hidden="true">🍽️</div>
+            <div class="kitty-scene" aria-hidden="true">
+              <span class="scene-sparkle sparkle-left">✦</span>
+              <svg class="kitty" viewBox="0 0 180 152" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                <path d="M26 62 25 13Q26 3 36 8L68 28Q89 21 110 27L144 7Q155 2 155 16L153 63Q169 84 161 109Q153 139 90 143Q27 139 19 109Q11 84 26 62Z" fill="#fff" stroke="#432b38" stroke-width="5" stroke-linejoin="round"/>
+                <path d="m30 20 2 29 24-16Z" fill="#ffd6e4"/>
+                <path d="m149 18-3 31-23-16Z" fill="#ffd6e4"/>
+                <ellipse cx="63" cy="91" rx="5" ry="7" fill="#33262f"/>
+                <ellipse cx="117" cy="91" rx="5" ry="7" fill="#33262f"/>
+                <ellipse cx="90" cy="105" rx="7" ry="5" fill="#f5c84c"/>
+                <path d="M47 101 16 95M47 110 16 112M133 101l31-6M133 110l31 2" stroke="#432b38" stroke-width="3" stroke-linecap="round"/>
+                <path d="M104 26Q91 15 86 32Q83 46 104 49L119 40Q130 51 143 44Q157 37 148 24Q140 13 119 27Z" fill="#f35487" stroke="#ba2d61" stroke-width="3" stroke-linejoin="round"/>
+                <circle cx="118" cy="36" r="9" fill="#ff80a6" stroke="#ba2d61" stroke-width="3"/>
+              </svg>
+              <span class="scene-sparkle sparkle-right">♡</span>
+              <div class="plate" id="plate">🍽️</div>
+            </div>
             <p class="stage-caption" id="stage-caption">让好运帮你决定</p>
             <h2 class="dish-name" id="draw-result" aria-live="polite" aria-atomic="true">今天吃点什么呢？</h2>
             <p class="stage-hint" id="stage-hint">按下按钮，从食谱里抽一道菜</p>
           </div>
           <button class="draw-button" id="draw-button" type="button">
-            <span aria-hidden="true" id="draw-button-icon">✦</span>
+            <span aria-hidden="true" id="draw-button-icon">♡</span>
             <span id="draw-button-text">帮我决定！</span>
-            <span aria-hidden="true">→</span>
+            <span aria-hidden="true">✦</span>
           </button>
         </div>
         <p class="draw-footnote" id="draw-footnote">当前有 0 道备选，每道菜被抽中的概率相同。</p>
         <div class="tip-card">
-          <span class="tip-icon" aria-hidden="true">💡</span>
+          <span class="tip-icon" aria-hidden="true">💗</span>
           <div>
             <strong>总在纠结吃什么？</strong>
             <p>先在「我的食谱」里添加喜欢的食物，然后把选择交给随机数。</p>
@@ -68,10 +83,10 @@
       <section id="panel-menu" class="view" aria-labelledby="tab-menu" hidden>
         <div class="menu-head">
           <div>
-            <span class="eyebrow">MY FOOD LIST</span>
+            <span class="eyebrow">MY SWEET FOOD LIST ♡</span>
             <h2>我的食谱 <span id="menu-food-count" class="menu-count">0</span></h2>
           </div>
-          <span class="head-emoji" aria-hidden="true">🥗</span>
+          <span class="head-emoji" aria-hidden="true">🍓</span>
         </div>
         <form class="add-form" id="food-form">
           <label for="food-input" id="food-form-label">添加一道想吃的菜</label>

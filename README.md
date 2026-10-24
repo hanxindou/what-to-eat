@@ -58,8 +58,9 @@ what-to-eat/
 ├── sw.js                  断网缓存
 ├── .nojekyll              告诉 GitHub Pages 不走 Jekyll 构建
 └── icons/
-    ├── icon-192.png
-    └── icon-512.png
+        ├── icon-192.png
+        ├── icon-512.png
+        └── icon.svg             粉色猫咪图标源文件
 ```
 
 修改发布代码后推送 GitHub 即可部署新版本；若 Service Worker 的预缓存列表有变更，记得同步更新 `sw.js` 及其 `APP_CACHE` 版本号。
